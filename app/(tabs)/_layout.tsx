@@ -145,7 +145,9 @@ export default function TabLayout() {
                 marginTop: 60,
               }}
             >
-              <AntDesign name="qrcode" size={30} color="white" />
+              {/* <AntDesign name="qrcode" size={30} color="white" /> */}
+              <Image source={require("@/assets/images/car.png")} />
+
               {focused && (
                 <AntDesign
                   name="minus"
@@ -171,7 +173,7 @@ export default function TabLayout() {
           ),
           tabBarLabel: () => (
             <View style={{ borderTopLeftRadius: 30 }}>
-              <Text style={{ color: "white", fontSize: 14, marginTop: 5 , position:"relative",left:Platform.OS === "android" ?  160 : 178, top:70, zIndex:1000}}>
+              <Text style={{ color: "white", fontSize: 14, marginTop: 5 , position:"relative",left:Platform.OS === "android" ?  170 : 178, top:70, zIndex:1000}}>
                 Sell Car
               </Text>
               <Svg
@@ -218,12 +220,13 @@ export default function TabLayout() {
         options={{
           title: " ",
           tabBarIcon: ({ focused, color, size }) => (
-            <View style={{ alignItems: "center", borderBottomColor: "green" }}>
+            <View style={{ alignItems: "center", paddingTop:Platform.OS === "ios"? 15 : 0 }}>
               <Image
-                source={{ uri: "https://via.placeholder.com/40" }}
+                // source={{ uri: "https://via.placeholder.com/40" }}
+                source={require("@/assets/images/salmon.png")}
                 style={{
-                  width: 30,
-                  height: 30,
+                  width: 40,
+                  height: 40,
                   borderRadius: 15,
                   borderColor: focused ? "white" : "transparent",
                   borderWidth: focused ? 2 : 0,
