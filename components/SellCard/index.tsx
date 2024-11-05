@@ -10,6 +10,8 @@ import {
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { CarItemProps } from "./types";
+import GridViewCard from "./GridView";
+import ListView from "./ListView";
 
 const CarItem: React.FC<CarItemProps> = ({ item, isGridView }) => {
   const [isLiked, setIsLiked] = useState(false);
@@ -32,149 +34,16 @@ const CarItem: React.FC<CarItemProps> = ({ item, isGridView }) => {
       }),
     ]).start();
   };
-  const styles = StyleSheet.create({
-    card: {
-      backgroundColor: "#f8f8f8",
-      borderRadius: 8,
-      padding: 16,
-      margin: 8,
-      alignItems: "center",
-    },
-    priceAmount: {
-      color: "black",
-      fontWeight: "bold",
-      fontSize: 16,
-    },
-    currencyCode: {
-      color: "#F3B97F",
-      fontSize: 12,
-    },
-    gridCard: {
-      flex: 1,
-      margin: 4,
-      padding: 8,
-    },
-    listCard: {
-      flexDirection: "row",
-      alignItems: "center",
-    },
-    imageContainer: {
-      position: "relative",
-    },
-    carImage: {
-      width: 100,
-      height: 100,
-      borderRadius: 8,
-    },
-    heartIconContainer: {
-      position: "absolute",
-      top: 8,
-      right: 8,
-      zIndex: 1,
-    },
-    inlineHeartIcon: {
-      marginRight: 8,
-      display: "flex",
-      justifyContent: "flex-end",
-    },
-    carInfo: {
-      flex: 1,
-      marginLeft: 12,
-      justifyContent: "space-between",
-      flexGrow: 1,
-    },
-    titleContainer: {
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "space-between",
-    },
-    carTitle: {
-      fontSize: Platform.OS === "android" ? 12 : 16,
-      fontWeight: "semibold",
-      marginBottom: 4,
-    },
-    location: {
-      fontSize: 16,
-      fontWeight: "semibold",
-      marginBottom: 4,
-      color: "#A5A7A8",
-    },
-    priceContainer: {
-      flexDirection: isGridView ? "row-reverse" :"row",
-      alignItems: "center",
-      justifyContent: "space-between",
-      marginTop: 20,
-    },
-    carPrice: {
-      fontSize: 14,
-      color: "#888",
-      display: "flex",
-      gap: 10,
-    },
-    menuIcon: {
-      marginRight: 10,
-    },
-  });
+  
   return (
-    <View style={[styles.card, isGridView ? styles.gridCard : styles.listCard]}>
+    <View style={{backgroundColor:"#eaeaea"}}>
       {isGridView ? (
-        <View style={styles.imageContainer}>
-          <Image source={item.image} style={styles.carImage} />
-          <TouchableOpacity
-            onPress={toggleLike}
-            style={styles.heartIconContainer}
-          >
-            <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
-              <FontAwesome
-                name={isLiked ? "heart" : "heart-o"}
-                size={24}
-                color={isLiked ? "red" : "grey"}
-              />
-            </Animated.View>
-          </TouchableOpacity>
-        </View>
+        <GridViewCard item={item} isGridView={isGridView} />
       ) : (
-        <Image source={item.image} style={styles.carImage} />
+        <ListView item={item} isGridView={isGridView} />
       )}
-
-      <View style={styles.carInfo}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.carTitle}>{item.title}</Text>
-          {!isGridView && (
-            <TouchableOpacity
-              onPress={toggleLike}
-              style={styles.inlineHeartIcon}
-            >
-              <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
-                <FontAwesome
-                  name={isLiked ? "heart" : "heart-o"}
-                  size={24}
-                  color={isLiked ? "red" : "grey"}
-                />
-              </Animated.View>
-            </TouchableOpacity>
-          )}
-        </View>
-        <Text style={styles.location}>Doha - Qatar</Text>
-        <View style={styles.priceContainer}>
-          <Text style={styles.carPrice}>
-            <Text style={styles.currencyCode}>{item.price.split(" ")[0]}</Text>
-            <Text style={styles.priceAmount}>{item.price.split(" ")[1]}</Text>
-          </Text>
-
-          <FontAwesome
-            name="ellipsis-h"
-            size={20}
-            color="#888"
-            style={styles.menuIcon}
-          />
-        </View>
-      </View>
     </View>
   );
-  
 };
-
-
 
 export default CarItem;

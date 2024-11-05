@@ -1,0 +1,72 @@
+ // <View style={[styles.card, isGridView ? styles.gridCard : styles.listCard]}>
+    //   {isGridView ? (
+    //     <View style={styles.imageContainer}>
+    //       <Image source={item.image} style={styles.carImage} />
+
+    //       <TouchableOpacity
+    //         onPress={toggleLike}
+    //         style={styles.heartIconContainer}
+    //       >
+    //         <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
+    //           <FontAwesome
+    //             name={isLiked ? "heart" : "heart-o"}
+    //             size={24}
+    //             color={isLiked ? "red" : "grey"}
+    //           />
+    //         </Animated.View>
+    //       </TouchableOpacity>
+    //     </View>
+    //   ) : (
+    //     <View style={{position:"relative"}}>
+    //       <View
+    //         style={{
+    //           backgroundColor: "#F3B97F",
+    //           borderRadius: 10,
+    //           paddingVertical: 3,
+    //           paddingHorizontal: 10,
+    //           position: "absolute",
+    //           top: 5,
+    //           left: 5,
+    //           zIndex: 100
+    //         }}
+    //       >
+    //         <Text style={{ fontSize: 8, fontWeight:"bold" }}>NEW</Text>
+    //       </View>
+    //       <Image source={item.image} style={styles.carImage} />
+    //     </View>
+    //   )}
+
+    //   <View style={styles.carInfo}>
+    //     <View style={styles.titleContainer}>
+    //       <Text style={styles.carTitle}>{item.title}</Text>
+    //       {!isGridView && (
+    //         <TouchableOpacity
+    //           onPress={toggleLike}
+    //           style={styles.inlineHeartIcon}
+    //         >
+    //           <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
+    //             <FontAwesome
+    //               name={isLiked ? "heart" : "heart-o"}
+    //               size={24}
+    //               color={isLiked ? "red" : "grey"}
+    //             />
+    //           </Animated.View>
+    //         </TouchableOpacity>
+    //       )}
+    //     </View>
+    //     <Text style={styles.location}>Doha - Qatar</Text>
+    //     <View style={styles.priceContainer}>
+    //       <Text style={styles.carPrice}>
+    //         <Text style={styles.currencyCode}>{item.price.split(" ")[0]} </Text>
+    //         <Text style={styles.priceAmount}>{item.price.split(" ")[1]}</Text>
+    //       </Text>
+
+    //       <FontAwesome
+    //         name="ellipsis-h"
+    //         size={20}
+    //         color="#888"
+    //         style={styles.menuIcon}
+    //       />
+    //     </View>
+    //   </View>
+    // </View>

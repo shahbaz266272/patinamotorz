@@ -12,6 +12,9 @@ import { FontAwesome } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { cars } from "@/components/SellCard/constant";
 import CarItem from "@/components/SellCard";
+import { StatusBar } from "expo-status-bar";
+import HeaderComp from "@/components/Header";
+import BottomNavigation from "@/components/BottomNavigation";
 
 export default function HomeScreen() {
   const [isGridView, setIsGridView] = useState(false);
@@ -21,51 +24,21 @@ export default function HomeScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View>
-        <View style={{ backgroundColor: "#1C3039", height: 158 }}>
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              paddingHorizontal: 10,
-            }}
-          >
-            <Image
-              source={require("@/assets/images/menubar.png")}
-              style={{ marginTop: 60 }}
-            />
-            <Image
-              source={require("@/assets/images/logo.png")}
-              style={{ marginTop: 60 }}
-            />
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "flex-end",
-                gap: 15,
-              }}
-            >
-              <Image
-                source={require("@/assets/images/search.png")}
-                style={{ marginTop: 60 }}
-              />
-              <Image
-                source={require("@/assets/images/bell.png")}
-                style={{ marginTop: 60 }}
-              />
-            </View>
-          </View>
-        </View>
-      </View>
+    <View style={styles.container}>
+      <HeaderComp />
 
       <View style={styles.header}>
-        <View style={{display:"flex", flexDirection:"row", gap:3, alignItems:"center", alignContent:"center"}}>
-
-        <Image source={require("@/assets/images/add.png")} />
-        <Text style={styles.headerTitle}>Add Car</Text>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            gap: 3,
+            alignItems: "center",
+            alignContent: "center",
+          }}
+        >
+          <Image source={require("@/assets/images/add.png")} />
+          <Text style={styles.headerTitle}>Add Car</Text>
         </View>
         <TouchableOpacity onPress={toggleView}>
           {isGridView ? (
@@ -74,10 +47,10 @@ export default function HomeScreen() {
             <Image source={require("@/assets/images/Grid.png")} />
           )}
           {/* <FontAwesome
-            name={isGridView ? "list" : "th"}
-            size={24}
-            color="black"
-          />  */}
+              name={isGridView ? "list" : "th"}
+              size={24}
+              color="black"
+            />  */}
         </TouchableOpacity>
       </View>
 
@@ -91,17 +64,18 @@ export default function HomeScreen() {
         numColumns={isGridView ? 2 : 1}
         contentContainerStyle={styles.listContent}
       />
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#f8f8f8",
   },
   header: {
     flexDirection: "row",
+    backgroundColor: "#eaeaea",
     justifyContent: "space-between",
     padding: 16,
   },

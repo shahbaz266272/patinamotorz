@@ -23,7 +23,7 @@ import { height, scale } from "react-native-size-scaling";
 import { getPathDown } from "@/components/curve";
 
 export default function TabLayout() {
-  const [maxWidth, setMaxWidth] = useState(Dimensions.get("window").width);
+  const [maxWidth, setMaxWidth] = useState(Dimensions.get("window").width + 20);
   const colorScheme = useColorScheme();
   const translation = useRef(new Animated.Value(0)).current;
   const returnpathDown = getPathDown(maxWidth, 60, 50);
@@ -56,8 +56,8 @@ export default function TabLayout() {
         tabBarInactiveTintColor: "white",
         tabBarStyle: {
            backgroundColor: "#1c3039",
-          // borderTopLeftRadius: 50,
-          // borderTopRightRadius: 50,
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
           borderTopWidth: 0,
           position: "absolute",
           elevation: 0,
@@ -69,7 +69,7 @@ export default function TabLayout() {
     >
       {/* Home Tab */}
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
           title: "Home",
           tabBarIcon: ({ focused, color, size }) => (

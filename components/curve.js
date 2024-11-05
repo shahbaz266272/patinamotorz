@@ -2,7 +2,7 @@ import * as shape from "d3-shape";
 import { scale } from "react-native-size-scaling";
 
 // Set the radius for rounded corners
-const radius = scale(20); // Adjust the radius as needed
+const radius = scale(40); // Adjust the radius as needed
 
 // Function to create a rounded rectangle path
 const lineWithRoundedCorners = (width, height) => {

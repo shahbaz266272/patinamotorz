@@ -1,14 +1,17 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import HeaderComp from '@/components/Header'
 
-const Notifications = () => {
+const SellCars = () => {
   return (
     <View>
-      <Text>Notifications</Text>
+            <HeaderComp />
+
+      <Text>SellCars</Text>
     </View>
   )
 }
 
-export default Notifications
+export default SellCars
 
 const styles = StyleSheet.create({})
