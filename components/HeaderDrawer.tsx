@@ -3,7 +3,7 @@ import React from "react";
 import { router } from "expo-router";
 // import { useBottomSheet } from "./BottomNavigation";
 
-const HeaderComp = () => {
+const HeaderCompDrawer = () => {
   // const { openBottomSheet } = useBottomSheet();
 
   return (
@@ -23,9 +23,9 @@ const HeaderComp = () => {
 
               <BottomSheetMenu />
               </GestureHandlerRootView> */}
-            <TouchableOpacity onPress={() => router.push("/(root)/allUsersMenu")}>
+            <TouchableOpacity onPress={() => router.push("/(root)/(tabs)/home")}>
               <Image
-                source={require("@/assets/images/menubar.png")}
+                source={require("@/assets/images/cross.png")}
                 style={{ marginTop: 60 }}
               />
             </TouchableOpacity>
@@ -57,4 +57,4 @@ const HeaderComp = () => {
   );
 };
 
-export default HeaderComp;
+export default HeaderCompDrawer;

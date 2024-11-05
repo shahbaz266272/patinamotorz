@@ -14,8 +14,8 @@ import { cars } from "@/components/SellCard/constant";
 import CarItem from "@/components/SellCard";
 import { StatusBar } from "expo-status-bar";
 import HeaderComp from "@/components/Header";
-import BottomNavigation from "@/components/BottomNavigation";
-
+import BottomSheetProvider from "@/components/BottomNavigation";
+ 
 export default function HomeScreen() {
   const [isGridView, setIsGridView] = useState(false);
 
@@ -64,6 +64,7 @@ export default function HomeScreen() {
         numColumns={isGridView ? 2 : 1}
         contentContainerStyle={styles.listContent}
       />
+
     </View>
   );
 }

@@ -1,108 +1,127 @@
+// // BottomSheetContext.js
+// import React, { createContext, useContext, useRef, useCallback } from 'react';
+// import BottomSheet from '@gorhom/bottom-sheet';
+// import { View, Text } from 'react-native';
+
+// // Define the context type
+// interface BottomSheetContextType {
+//   openBottomSheet: () => void;
+//   closeBottomSheet: () => void;
+// }
+
+// // Create the context with the correct type
+// const BottomSheetContext = createContext<BottomSheetContextType | null>(null);
+
+// export const BottomSheetProvider = ({ children }:{children:any}) => {
+//   const bottomSheetRef:any = useRef(null);
+
+//   const openBottomSheet = useCallback(() => {
+//     bottomSheetRef.current?.expand();
+//   }, []);
+
+//   const closeBottomSheet = useCallback(() => {
+//     bottomSheetRef.current?.close();
+//   }, []);
+
+//   return (
+//     <BottomSheetContext.Provider value={{ openBottomSheet, closeBottomSheet }}>
+//       {children}
+//       <BottomSheet
+//         ref={bottomSheetRef}
+//         snapPoints={['25%', '50%', '90%']}
+//         index={0}
+//         style={{ borderColor: 'red', borderWidth: 2 }} // Visual aid
+
+//       >
+//         <View style={{ padding: 20 }}>
+//           <Text>Bottom Sheet Content</Text>
+//         </View>
+//       </BottomSheet>
+//     </BottomSheetContext.Provider>
+//   );
+// };
+
+// export const useBottomSheet = () => {
+//   const context = useContext(BottomSheetContext);
+//   if (!context) {
+//     throw new Error('useBottomSheet must be used within a BottomSheetProvider');
+//   }
+//   return context;
+// };
+
 import React, { useCallback, useRef, useMemo } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
-import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
+import { StyleSheet, View, Text, Button } from "react-native";
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import BottomSheet, { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 
-// Sample menu items
-const MENU_ITEMS = [
-  { id: "1", title: "Home" },
-  { id: "2", title: "Profile" },
-  { id: "3", title: "Settings" },
-  { id: "4", title: "Logout" },
-];
+const BottomSheetProvider = () => {
+  // hooks
+  const sheetRef = useRef<BottomSheet>(null);
 
-const BottomSheetMenu = () => {
-  // Reference for the bottom sheet
-  const bottomSheetRef = useRef<BottomSheet>(null);
+  // variables
+  const data = useMemo(
+    () =>
+      Array(50)
+        .fill(0)
+        .map((_, index) => `index-${index}`),
+    []
+  );
+  const snapPoints = useMemo(() => ["50%","70","90"], []);
 
-  // Snap points for bottom sheet
-  const snapPoints = useMemo(() => ["25%", "50%"], []);
-
-  // Handle opening the bottom sheet
-  const handleOpen = useCallback(() => {
-    bottomSheetRef.current?.expand();
+  // callbacks
+  const handleSheetChange = useCallback((index:any) => {
+    console.log("handleSheetChange", index);
+  }, []);
+  const handleSnapPress = useCallback((index:any) => {
+    sheetRef.current?.snapToIndex(index);
+  }, []);
+  const handleClosePress = useCallback(() => {
+    sheetRef.current?.close();
   }, []);
 
-  // Handle closing the bottom sheet
-  const handleClose = useCallback(() => {
-    bottomSheetRef.current?.close();
-  }, []);
-
-  // Render each menu item
-  const renderMenuItem = useCallback(
-    ({ item }: { item: any }) => (
-      <TouchableOpacity
-        style={styles.menuItem}
-        onPress={() => alert(`Navigating to ${item.title}`)}
-      >
-        <Text style={styles.menuText}>{item.title}</Text>
-      </TouchableOpacity>
+  // render
+  const renderItem = useCallback(
+    (item:any) => (
+      <View key={item} style={styles.itemContainer}>
+        <Text>{item}</Text>
+      </View>
     ),
     []
   );
-
   return (
-    <View style={styles.container}>
-      {/* Menu button to open bottom sheet */}
-      <TouchableOpacity style={styles.menuButton} onPress={handleOpen}>
-        <Image
-          source={require("@/assets/images/menubar.png")}
-          style={styles.menuIcon}
-        />
-      </TouchableOpacity>
-
-      {/* Bottom Sheet */}
+    <GestureHandlerRootView style={styles.container}>
+      <Button title="Snap To 90%" onPress={() => handleSnapPress(2)} />
+      <Button title="Snap To 50%" onPress={() => handleSnapPress(1)} />
+      <Button title="Snap To 25%" onPress={() => handleSnapPress(0)} />
+      <Button title="Close" onPress={() => handleClosePress()} />
       <BottomSheet
-        ref={bottomSheetRef}
-        index={-1}
+        ref={sheetRef}
+        index={1}
         snapPoints={snapPoints}
-        onClose={handleClose}
-        enablePanDownToClose={true}
+        enableDynamicSizing={false}
+        onChange={handleSheetChange}
       >
-        <View style={styles.contentContainer}>
-          <Text style={styles.sheetTitle}>Menu</Text>
-          <BottomSheetFlatList
-            data={MENU_ITEMS}
-            keyExtractor={(item) => item.id}
-            renderItem={renderMenuItem}
-          />
-        </View>
+        <BottomSheetScrollView contentContainerStyle={styles.contentContainer}>
+          {data.map(renderItem)}
+        </BottomSheetScrollView>
       </BottomSheet>
-    </View>
+    </GestureHandlerRootView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  menuButton: {
-    padding: 10,
-    backgroundColor: "#1C3039",
-    borderRadius: 5,
-  },
-  menuIcon: {
-    width: 24,
-    height: 24,
+    paddingTop: 390,
   },
   contentContainer: {
-    flex: 1,
-    padding: 20,
+    backgroundColor: "white",
   },
-  sheetTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 10,
-  },
-  menuItem: {
-    padding: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: "#e0e0e0",
-  },
-  menuText: {
-    fontSize: 16,
+  itemContainer: {
+    padding: 6,
+    margin: 6,
+    backgroundColor: "#eee",
   },
 });
 
-export default BottomSheetMenu;
+export default BottomSheetProvider;

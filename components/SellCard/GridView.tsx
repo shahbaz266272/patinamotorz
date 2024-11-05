@@ -6,8 +6,9 @@ import {
   StyleSheet,
   TouchableOpacity,
   Animated,
-  Platform,
+  Modal,
   Dimensions,
+  Platform,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { CarItemProps } from "./types";
@@ -16,12 +17,13 @@ const { width } = Dimensions.get("window");
 
 const GridViewCard: React.FC<CarItemProps> = ({ item, isGridView }) => {
   const [isLiked, setIsLiked] = useState(false);
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
+  const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0, alignLeft: false });
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
   const toggleLike = () => {
     setIsLiked(!isLiked);
 
-    // Animate the heart icon when toggled
     Animated.sequence([
       Animated.timing(scaleAnim, {
         toValue: 1.2,
@@ -36,16 +38,23 @@ const GridViewCard: React.FC<CarItemProps> = ({ item, isGridView }) => {
     ]).start();
   };
 
+  const toggleMenu = () => setIsMenuVisible(!isMenuVisible);
+
+  const handleOptionSelect = (option:any) => {
+    console.log(`${option} selected`);
+    toggleMenu();
+  };
+
+  const showMenu = (event:any) => {
+    const { pageX, pageY } = event.nativeEvent;
+    const isLeftColumn = pageX < width / 2; // Determine if icon is in the left column
+    setMenuPosition({ x: pageX, y: pageY, alignLeft: !isLeftColumn });
+    toggleMenu();
+  };
+
   const styles = StyleSheet.create({
-    card: {
-      backgroundColor: "#000",
-      borderRadius: 8,
-      paddingVertical: 1,
-      margin: 8,
-      alignItems: "flex-start",
-    },
     gridCard: {
-      width: isGridView ? width / 2 - 20 : width - 30, // Adjust width for grid vs list view
+      width: isGridView ? width / 2 - 20 : width - 30,
       margin: 10,
       padding: 10,
       backgroundColor: "#fff",
@@ -54,7 +63,7 @@ const GridViewCard: React.FC<CarItemProps> = ({ item, isGridView }) => {
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.1,
       shadowRadius: 8,
-      elevation: 5, // For Android shadow
+      elevation: 5,
     },
     imageContainer: {
       position: "relative",
@@ -113,6 +122,30 @@ const GridViewCard: React.FC<CarItemProps> = ({ item, isGridView }) => {
     menuIcon: {
       marginLeft: 10,
     },
+    menuContainer: {
+      position: "absolute",
+      top: Platform.OS === "android" ? menuPosition.y - 30 : menuPosition.y + 5,
+      left: menuPosition.alignLeft ? menuPosition.x - 150 : menuPosition.x + 10,
+      backgroundColor: "#fff",
+      borderRadius: 8,
+      width: 150,
+      padding: 10,
+      shadowColor: "#000",
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.2,
+      shadowRadius: 4,
+      elevation: 5,
+    },
+    menuItem: {
+      flexDirection: "row",
+      alignItems: "center",
+      paddingVertical: 8,
+    },
+    menuItemText: {
+      fontSize: 16,
+      marginLeft: 10,
+      color: "#333",
+    },
   });
 
   return (
@@ -139,19 +172,54 @@ const GridViewCard: React.FC<CarItemProps> = ({ item, isGridView }) => {
           A Premium Crossover SUV That Does it All!
         </Text>
         <View style={styles.priceContainer}>
+          <TouchableOpacity onPress={showMenu}>
+            <FontAwesome
+              name="ellipsis-h"
+              size={20}
+              color="#888"
+              style={styles.menuIcon}
+            />
+          </TouchableOpacity>
           <Text style={styles.carPrice}>
             <Text style={styles.currencyCode}>{item.price.split(" ")[0]} </Text>
             <Text>{item.price.split(" ")[1]}</Text>
           </Text>
-
-          <FontAwesome
-            name="ellipsis-h"
-            size={20}
-            color="#888"
-            style={styles.menuIcon}
-          />
         </View>
       </View>
+
+      {/* Modal for menu options */}
+      <Modal
+        visible={isMenuVisible}
+        transparent
+        animationType="none"
+        onRequestClose={toggleMenu}
+      >
+        <TouchableOpacity style={{ flex: 1 }} onPress={toggleMenu}>
+          <View style={styles.menuContainer}>
+            <TouchableOpacity
+              style={styles.menuItem}
+              onPress={() => handleOptionSelect("Sold")}
+            >
+              <FontAwesome name="check" size={20} color="#4CAF50" />
+              <Text style={styles.menuItemText}>Sold</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.menuItem}
+              onPress={() => handleOptionSelect("Edit")}
+            >
+              <FontAwesome name="edit" size={20} color="#FF9800" />
+              <Text style={styles.menuItemText}>Edit</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.menuItem}
+              onPress={() => handleOptionSelect("Delete")}
+            >
+              <FontAwesome name="trash" size={20} color="#F44336" />
+              <Text style={styles.menuItemText}>Delete</Text>
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+      </Modal>
     </View>
   );
 };
