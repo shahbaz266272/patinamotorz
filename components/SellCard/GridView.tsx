@@ -18,7 +18,11 @@ const { width } = Dimensions.get("window");
 const GridViewCard: React.FC<CarItemProps> = ({ item, isGridView }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [isMenuVisible, setIsMenuVisible] = useState(false);
-  const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0, alignLeft: false });
+  const [menuPosition, setMenuPosition] = useState({
+    x: 0,
+    y: 0,
+    alignLeft: false,
+  });
   const scaleAnim = useRef(new Animated.Value(1)).current;
 
   const toggleLike = () => {
@@ -40,7 +44,7 @@ const GridViewCard: React.FC<CarItemProps> = ({ item, isGridView }) => {
 
   const toggleMenu = () => setIsMenuVisible(!isMenuVisible);
 
-  const handleOptionSelect = (option:any) => {
+  const handleOptionSelect = (option: any) => {
     console.log(`${option} selected`);
     toggleMenu();
   };
@@ -48,7 +52,7 @@ const GridViewCard: React.FC<CarItemProps> = ({ item, isGridView }) => {
   const showMenu = (event:any) => {
     const { pageX, pageY } = event.nativeEvent;
     const isLeftColumn = pageX < width / 2; // Determine if icon is in the left column
-    setMenuPosition({ x: pageX, y: pageY, alignLeft: !isLeftColumn });
+    setMenuPosition({ x: pageX, y: pageY - 50, alignLeft: !isLeftColumn }); // Adjusted y-position
     toggleMenu();
   };
 
@@ -124,11 +128,11 @@ const GridViewCard: React.FC<CarItemProps> = ({ item, isGridView }) => {
     },
     menuContainer: {
       position: "absolute",
-      top: Platform.OS === "android" ? menuPosition.y - 30 : menuPosition.y + 5,
-      left: menuPosition.alignLeft ? menuPosition.x - 150 : menuPosition.x + 10,
+      top: Platform.OS === "android" ? menuPosition.y - 60 : menuPosition.y - 60,
+      left: menuPosition.alignLeft ? menuPosition.x + 10 : menuPosition.x + 10,
       backgroundColor: "#fff",
       borderRadius: 8,
-      width: 150,
+      width: 115,
       padding: 10,
       shadowColor: "#000",
       shadowOffset: { width: 0, height: 2 },
@@ -153,7 +157,10 @@ const GridViewCard: React.FC<CarItemProps> = ({ item, isGridView }) => {
       <View style={styles.imageContainer}>
         <Image source={item.image} style={styles.carImage} />
 
-        <TouchableOpacity onPress={toggleLike} style={styles.heartIconContainer}>
+        <TouchableOpacity
+          onPress={toggleLike}
+          style={styles.heartIconContainer}
+        >
           <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
             <FontAwesome
               name={isLiked ? "heart" : "heart-o"}
@@ -195,28 +202,49 @@ const GridViewCard: React.FC<CarItemProps> = ({ item, isGridView }) => {
         onRequestClose={toggleMenu}
       >
         <TouchableOpacity style={{ flex: 1 }} onPress={toggleMenu}>
-          <View style={styles.menuContainer}>
-            <TouchableOpacity
-              style={styles.menuItem}
-              onPress={() => handleOptionSelect("Sold")}
+          <View style={[styles.menuContainer]}>
+            <View
+              style={{
+                borderBottomWidth: 1,
+                borderBottomColor: "#F1F1F1",
+                paddingHorizontal: 5,
+              }}
             >
-              <FontAwesome name="check" size={20} color="#4CAF50" />
-              <Text style={styles.menuItemText}>Sold</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.menuItem}
-              onPress={() => handleOptionSelect("Edit")}
+              <TouchableOpacity
+                style={styles.menuItem}
+                onPress={() => handleOptionSelect("Sold")}
+              >
+                <Image source={require("@/assets/images/sold.png")} />
+                <Text style={styles.menuItemText}>Sold</Text>
+              </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                borderBottomWidth: 1,
+                borderBottomColor: "#F1F1F1",
+                paddingHorizontal: 5,
+              }}
             >
-              <FontAwesome name="edit" size={20} color="#FF9800" />
-              <Text style={styles.menuItemText}>Edit</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.menuItem}
-              onPress={() => handleOptionSelect("Delete")}
-            >
-              <FontAwesome name="trash" size={20} color="#F44336" />
-              <Text style={styles.menuItemText}>Delete</Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.menuItem}
+                onPress={() => handleOptionSelect("Edit")}
+              >
+                <Image source={require("@/assets/images/edit.png")} />
+                <Text style={styles.menuItemText}>Edit</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{ paddingHorizontal: 5 }}>
+              <TouchableOpacity
+                style={styles.menuItem}
+                onPress={() => handleOptionSelect("Delete")}
+              >
+                <Image
+                  source={require("@/assets/images/delete.png")}
+                  style={{ marginLeft: 2 }}
+                />
+                <Text style={{ marginLeft: 13 }}>Delete</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </TouchableOpacity>
       </Modal>

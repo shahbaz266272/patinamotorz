@@ -13,9 +13,9 @@ import RideLayout from "@/components/BottomSheetLayout";
 import Entypo from "@expo/vector-icons/Entypo";
 import Feather from "@expo/vector-icons/Feather";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import Ionicons from '@expo/vector-icons/Ionicons';
-import SimpleLineIcons from '@expo/vector-icons/SimpleLineIcons';
-import AntDesign from '@expo/vector-icons/AntDesign';
+import Ionicons from "@expo/vector-icons/Ionicons";
+import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
+import AntDesign from "@expo/vector-icons/AntDesign";
 
 const AllUsersMenu = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -37,7 +37,13 @@ const AllUsersMenu = () => {
 
   return (
     <RideLayout>
-      <View>
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+        }}
+      >
         <View
           style={{
             display: "flex",
@@ -178,10 +184,13 @@ const AllUsersMenu = () => {
               paddingVertical: 20,
             }}
           >
-            <MaterialIcons name="star-border"   size={20}
+            <MaterialIcons
+              name="star-border"
+              size={20}
               color="black"
-              style={{ marginTop: 1 }} />
-            
+              style={{ marginTop: 1 }}
+            />
+
             <Text style={{ color: "#000", fontWeight: "normal", marginTop: 0 }}>
               My Plan/Pakages{" "}
             </Text>
@@ -200,10 +209,13 @@ const AllUsersMenu = () => {
               paddingVertical: 20,
             }}
           >
-            <Ionicons name="chatbubbles-outline"  size={20}
+            <Ionicons
+              name="chatbubbles-outline"
+              size={20}
               color="black"
-              style={{ marginTop: 1 }} />
-            
+              style={{ marginTop: 1 }}
+            />
+
             <Text style={{ color: "#000", fontWeight: "normal", marginTop: 0 }}>
               FAQ’s
             </Text>
@@ -222,9 +234,12 @@ const AllUsersMenu = () => {
               paddingVertical: 20,
             }}
           >
-           <Ionicons name="chatbubbles-outline"  size={20}
+            <Ionicons
+              name="chatbubbles-outline"
+              size={20}
               color="black"
-              style={{ marginTop: 1 }} />
+              style={{ marginTop: 1 }}
+            />
             <Text style={{ color: "#000", fontWeight: "normal", marginTop: 0 }}>
               My Ads
             </Text>
@@ -243,10 +258,13 @@ const AllUsersMenu = () => {
               paddingVertical: 20,
             }}
           >
-            <SimpleLineIcons name="phone" size={20}
+            <SimpleLineIcons
+              name="phone"
+              size={20}
               color="black"
-              style={{ marginTop: 1 }} />
-            
+              style={{ marginTop: 1 }}
+            />
+
             <Text style={{ color: "#000", fontWeight: "normal", marginTop: 0 }}>
               Contact Us{" "}
             </Text>
@@ -265,46 +283,85 @@ const AllUsersMenu = () => {
               paddingVertical: 20,
             }}
           >
-            <AntDesign name="lock1"  size={20}
+            <AntDesign
+              name="lock1"
+              size={20}
               color="black"
-              style={{ marginTop: 1 }}/>
-             
+              style={{ marginTop: 1 }}
+            />
+
             <Text style={{ color: "#000", fontWeight: "normal", marginTop: 0 }}>
               Update Password
             </Text>
           </View>
         </View>
-        <Modal
-          transparent={true}
-          animationType="slide"
-          visible={modalVisible}
-          onRequestClose={() => setModalVisible(false)}
+        <View
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: 80,
+          }}
         >
-          <View style={styles.modalOverlay}>
-            <View style={styles.modalContainer}>
-              <Text style={styles.modalTitle}>Select Language</Text>
-              {languages.map((language) => (
-                <TouchableOpacity
-                  key={language.code}
-                  style={styles.languageOption}
-                  onPress={() => handleLanguageSelect(language)}
-                >
-                  <Image source={language.flag} style={styles.optionFlag} />
-                  <Text style={styles.languageOptionText}>
-                    {language.name} ({language.code})
-                  </Text>
-                </TouchableOpacity>
-              ))}
-              <TouchableOpacity
-                style={styles.closeButton}
-                onPress={() => setModalVisible(false)}
-              >
-                <Text style={styles.closeButtonText}>Close</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
+          <TouchableOpacity
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 10,
+              backgroundColor: "#1C3039",
+              borderRadius: 10,
+              paddingHorizontal: 35,
+              paddingVertical: 10,
+            }}
+          >
+            <Image
+              // source={{ uri: "https://via.placeholder.com/40" }}
+              source={require("@/assets/images/logouticon.png")}
+              style={{
+                width: 18,
+                height: 18,
+              }}
+            />
+            <Text
+              style={{ color: "#fff", fontSize: 16, fontWeight: "semibold" }}
+            >
+              Logout
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
+      <Modal
+        transparent={true}
+        animationType="slide"
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContainer}>
+            <Text style={styles.modalTitle}>Select Language</Text>
+            {languages.map((language) => (
+              <TouchableOpacity
+                key={language.code}
+                style={styles.languageOption}
+                onPress={() => handleLanguageSelect(language)}
+              >
+                <Image source={language.flag} style={styles.optionFlag} />
+                <Text style={styles.languageOptionText}>
+                  {language.name} ({language.code})
+                </Text>
+              </TouchableOpacity>
+            ))}
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => setModalVisible(false)}
+            >
+              <Text style={styles.closeButtonText}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </RideLayout>
   );
 };

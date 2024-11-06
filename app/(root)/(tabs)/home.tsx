@@ -55,6 +55,7 @@ export default function HomeScreen() {
       </View>
 
       <FlatList
+     
         data={cars}
         renderItem={({ item }) => (
           <CarItem item={item} isGridView={isGridView} />
@@ -72,7 +73,8 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f8f8f8",
+    backgroundColor: "#eaeaea",
+    paddingBottom: 25
   },
   header: {
     flexDirection: "row",

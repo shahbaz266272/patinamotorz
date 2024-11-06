@@ -23,8 +23,10 @@ import { height, scale } from "react-native-size-scaling";
 import { getPathDown } from "@/components/curve";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import BottomSheetProvider from "@/components/BottomNavigation";
-
+ 
 export default function TabLayout() {
+
+const screenWidth = Dimensions.get('window').width
   const [maxWidth, setMaxWidth] = useState(Dimensions.get("window").width + 20);
   const colorScheme = useColorScheme();
   const translation = useRef(new Animated.Value(0)).current;
@@ -196,7 +198,8 @@ export default function TabLayout() {
                     fontSize: 14,
                     marginTop: 5,
                     position: "relative",
-                    left: Platform.OS === "android" ? 170 : 178,
+                    left: screenWidth * 0.47,
+                    // left: Platform.OS === "android" ? 170 : 178,
                     top: 70,
                     zIndex: 1000,
                   }}

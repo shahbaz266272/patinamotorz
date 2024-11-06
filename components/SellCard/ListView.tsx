@@ -146,7 +146,7 @@ const ListView: React.FC<CarItemProps> = ({ item, isGridView }) => {
       backgroundColor: "#fff",
       borderRadius: 8,
       width: 150,
-      padding: 10,
+      paddingVertical: 10,
       shadowColor: "#000",
       shadowOffset: { width: 0, height: 2 },
       shadowOpacity: 0.2,
@@ -161,6 +161,7 @@ const ListView: React.FC<CarItemProps> = ({ item, isGridView }) => {
     menuItemText: {
       fontSize: 16,
       marginLeft: 10,
+      fontWeight: "semibold",
       color: "#333",
     },
   });
@@ -248,27 +249,45 @@ const ListView: React.FC<CarItemProps> = ({ item, isGridView }) => {
       >
         <TouchableOpacity style={{ flex: 1 }} onPress={toggleMenu}>
           <View style={[styles.menuContainer]}>
-            <TouchableOpacity
-              style={styles.menuItem}
-              onPress={() => handleOptionSelect("Sold")}
+            <View
+              style={{
+                borderBottomWidth: 1,
+                borderBottomColor: "#F1F1F1",
+                paddingHorizontal: 10,
+              }}
             >
-              <FontAwesome name="check" size={20} color="#4CAF50" />
-              <Text style={styles.menuItemText}>Sold</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.menuItem}
-              onPress={() => handleOptionSelect("Edit")}
+              <TouchableOpacity
+                style={styles.menuItem}
+                onPress={() => handleOptionSelect("Sold")}
+              >
+                <Image source={require("@/assets/images/sold.png")}   />
+                <Text style={styles.menuItemText}>Sold</Text>
+              </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                borderBottomWidth: 1,
+                borderBottomColor: "#F1F1F1",
+                paddingHorizontal: 10,
+              }}
             >
-              <FontAwesome name="edit" size={20} color="#FF9800" />
-              <Text style={styles.menuItemText}>Edit</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.menuItem}
-              onPress={() => handleOptionSelect("Delete")}
-            >
-              <FontAwesome name="trash" size={20} color="#F44336" />
-              <Text style={styles.menuItemText}>Delete</Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.menuItem}
+                onPress={() => handleOptionSelect("Edit")}
+              >
+                <Image source={require("@/assets/images/edit.png")}  />
+                <Text style={styles.menuItemText}>Edit</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{ paddingHorizontal: 10 }}>
+              <TouchableOpacity
+                style={styles.menuItem}
+                onPress={() => handleOptionSelect("Delete")}
+              >
+                <Image source={require("@/assets/images/delete.png")} style={{marginLeft:2}}  />
+                <Text style={{marginLeft:13}}>Delete</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </TouchableOpacity>
       </Modal>

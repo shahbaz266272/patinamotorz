@@ -36,7 +36,7 @@ const CarItem: React.FC<CarItemProps> = ({ item, isGridView }) => {
   };
   
   return (
-    <View style={{backgroundColor:"#eaeaea"}}>
+    <View style={{backgroundColor:"#eaeaea", }}>
       {isGridView ? (
         <GridViewCard item={item} isGridView={isGridView} />
       ) : (
